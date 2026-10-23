@@ -339,7 +339,7 @@
    "RMSE (lakhs)": 16.421,
    "R\u00b2 (price)": 0.844,
    "R\u00b2 (log price)": 0.87,
-   "fit time (s)": 0.048
+   "fit time (s)": 0.047
   },
   {
    "model": "Random Forest",
@@ -349,7 +349,7 @@
    "RMSE (lakhs)": 14.82,
    "R\u00b2 (price)": 0.873,
    "R\u00b2 (log price)": 0.898,
-   "fit time (s)": 1.085
+   "fit time (s)": 1.146
   },
   {
    "model": "XGBoost",
@@ -359,7 +359,7 @@
    "RMSE (lakhs)": 13.885,
    "R\u00b2 (price)": 0.888,
    "R\u00b2 (log price)": 0.91,
-   "fit time (s)": 1.913
+   "fit time (s)": 1.951
   },
   {
    "model": "LightGBM",
@@ -369,7 +369,7 @@
    "RMSE (lakhs)": 14.609,
    "R\u00b2 (price)": 0.876,
    "R\u00b2 (log price)": 0.9,
-   "fit time (s)": 5.592
+   "fit time (s)": 6.178
   },
   {
    "model": "CatBoost",
@@ -379,7 +379,7 @@
    "RMSE (lakhs)": 14.492,
    "R\u00b2 (price)": 0.878,
    "R\u00b2 (log price)": 0.902,
-   "fit time (s)": 4.916
+   "fit time (s)": 5.849
   },
   {
    "model": "Stack (XGB+CatBoost+LGBM)",
@@ -389,7 +389,7 @@
    "RMSE (lakhs)": 13.672,
    "R\u00b2 (price)": 0.892,
    "R\u00b2 (log price)": 0.912,
-   "fit time (s)": 12.421
+   "fit time (s)": 13.978
   }
  ],
  "ensembles": [
@@ -411,7 +411,7 @@
    "test MAPE %": 16.332,
    "test MdAPE %": 8.024,
    "test R\u00b2 (price)": 0.844,
-   "fit time (s)": 0.048
+   "fit time (s)": 0.047
   },
   {
    "model": "Bagging (decision trees)",
@@ -421,7 +421,7 @@
    "test MAPE %": 13.821,
    "test MdAPE %": 5.366,
    "test R\u00b2 (price)": 0.872,
-   "fit time (s)": 0.663
+   "fit time (s)": 0.637
   },
   {
    "model": "Random Forest",
@@ -431,7 +431,7 @@
    "test MAPE %": 13.762,
    "test MdAPE %": 5.794,
    "test R\u00b2 (price)": 0.873,
-   "fit time (s)": 1.085
+   "fit time (s)": 1.146
   },
   {
    "model": "XGBoost",
@@ -441,7 +441,7 @@
    "test MAPE %": 13.283,
    "test MdAPE %": 6.289,
    "test R\u00b2 (price)": 0.888,
-   "fit time (s)": 1.913
+   "fit time (s)": 1.951
   },
   {
    "model": "LightGBM",
@@ -451,7 +451,7 @@
    "test MAPE %": 14.009,
    "test MdAPE %": 6.411,
    "test R\u00b2 (price)": 0.876,
-   "fit time (s)": 5.592
+   "fit time (s)": 6.178
   },
   {
    "model": "CatBoost",
@@ -461,7 +461,7 @@
    "test MAPE %": 14.187,
    "test MdAPE %": 6.928,
    "test R\u00b2 (price)": 0.878,
-   "fit time (s)": 4.916
+   "fit time (s)": 5.849
   },
   {
    "model": "Voting (XGB+CatBoost+LGBM)",
@@ -471,7 +471,7 @@
    "test MAPE %": 13.13,
    "test MdAPE %": 6.356,
    "test R\u00b2 (price)": 0.891,
-   "fit time (s)": 12.421
+   "fit time (s)": 13.978
   },
   {
    "model": "Stack (XGB+CatBoost+LGBM)",
@@ -481,7 +481,7 @@
    "test MAPE %": 13.04,
    "test MdAPE %": 6.28,
    "test R\u00b2 (price)": 0.892,
-   "fit time (s)": 12.421
+   "fit time (s)": 13.978
   }
  ],
  "permutation_importance_mape_increase": {
