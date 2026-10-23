@@ -1,0 +1,6 @@
+*
+!requirements.txt
+!vehicle_model.py
+!app.py
+!model/
+!results/metrics.json

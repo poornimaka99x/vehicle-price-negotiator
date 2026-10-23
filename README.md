@@ -66,3 +66,22 @@ The app shows:
 * **why this price:** a SHAP waterfall showing how each feature moved the estimate.
 
 The **Prediction method** dropdown at the top switches between all nine models (the stack is the default), so you can see how much bagging, boosting, voting and stacking disagree on one car.
+
+## MLOps
+
+`.github/workflows/mlops.yml` runs on GitHub Actions:
+
+| Job | When | What |
+|---|---|---|
+| `test` | every PR and push | `pytest`: feature engineering, the model prices the held-out car inside its 80 % range, quality bar |
+| `train` | push to `main`, manual run | re-executes `vehicle_price.ipynb`, then the same tests act as a gate (test MAPE ≤ 14 %, R² ≥ 0.85) |
+| `deploy` | after `train` | registers `vehicle-price-model` in Azure ML (tagged with the commit and its metrics), builds the image, pushes it to ACR, updates the Container App and checks `/_stcore/health` |
+
+Azure (one resource group, `centralindia`): Container Registry (Basic), Azure ML workspace (model registry), and a Container App that scales to zero when nobody is using it. GitHub signs in to Azure with OIDC, so no Azure secret is stored in GitHub.
+
+```bash
+./infra/provision.sh    # one-off: resources, GitHub OIDC identity, repo variables, budget alert
+./infra/teardown.sh     # delete everything when grading is done
+```
+
+Run the tests locally with `python -m pytest`, and the container with `docker build -t vehicle-price . && docker run -p 8501:8501 vehicle-price`.
