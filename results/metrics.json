@@ -1,0 +1,776 @@
+{
+ "quality": {
+  "rows": 9788,
+  "nulls": 0,
+  "exact_duplicates": 18,
+  "rows_in_repost_groups": 1471,
+  "repost_groups": 613,
+  "date_min": "2024-12-03",
+  "date_max": "2025-02-05",
+  "mileage_equals_11000_x_age_share": 1.0,
+  "engine_cc_lt_600": 1,
+  "yom_lt_1990": 764,
+  "condition_new": 94,
+  "electric_rows": 69,
+  "electric_engine_cc_values": [
+   573.0,
+   650.0,
+   660.0,
+   800.0,
+   1100.0,
+   1170.0,
+   1330.0,
+   1490.0
+  ]
+ },
+ "target": {
+  "min": 2.65,
+  "median": 43.0,
+  "p05": 10.5,
+  "p95": 125.0,
+  "max": 790.0,
+  "skew": 3.4614515778471717,
+  "log_skew": -0.294749400510115
+ },
+ "cardinality": {
+  "brands": 50,
+  "models": 1555,
+  "towns": 107,
+  "models_lt5": 1260,
+  "rows_in_models_lt5": 1822,
+  "models_singleton": 916,
+  "top_models": {
+   "ALTO": 388,
+   "VITZ": 366,
+   "WAGON R STINGRAY": 281,
+   "MARUTI": 227,
+   "WAGON R": 204,
+   "VIVA ELITE": 168,
+   "AQUA": 167,
+   "SWIFT": 158
+  }
+ },
+ "spearman_with_log_price": {
+  "age": -0.655,
+  "engine_cc": 0.088
+ },
+ "median_price_by_fuel": {
+  "Diesel": 24.8,
+  "Electric": 54.4,
+  "Hybrid": 73.8,
+  "Petrol": 38.5
+ },
+ "median_price_by_gear": {
+  "Automatic": 61.5,
+  "Manual": 23.0
+ },
+ "by_month": [
+  {
+   "month": "2024-12",
+   "listings": 2869,
+   "median_price": 43.0,
+   "mean_pct_vs_same_model_year": 0.41
+  },
+  {
+   "month": "2025-01",
+   "listings": 4471,
+   "median_price": 42.5,
+   "mean_pct_vs_same_model_year": -0.26
+  },
+  {
+   "month": "2025-02",
+   "listings": 2430,
+   "median_price": 43.75,
+   "mean_pct_vs_same_model_year": -0.09
+  }
+ ],
+ "split": {
+  "train": 7817,
+  "test": 1952,
+  "dedup_rows": 9770,
+  "test_rows_model_unseen_in_train": 217
+ },
+ "design_check": [
+  {
+   "model": "CatBoost",
+   "setting": "depth=6",
+   "val RMSE (log)": 0.213,
+   "best iteration": 2856.3333
+  },
+  {
+   "model": "CatBoost",
+   "setting": "depth=8",
+   "val RMSE (log)": 0.2147,
+   "best iteration": 1216.3333
+  },
+  {
+   "model": "CatBoost",
+   "setting": "depth=10",
+   "val RMSE (log)": 0.2161,
+   "best iteration": 772.0
+  },
+  {
+   "model": "LightGBM",
+   "setting": "num_leaves=31",
+   "val RMSE (log)": 0.2181,
+   "best iteration": 1192.0
+  },
+  {
+   "model": "LightGBM",
+   "setting": "num_leaves=48",
+   "val RMSE (log)": 0.2179,
+   "best iteration": 744.6667
+  }
+ ],
+ "chosen": {
+  "catboost_depth": 6,
+  "catboost_iterations": 2900,
+  "lgb_num_leaves": 48,
+  "lgb_n_estimators": 800
+ },
+ "stack_weights": {
+  "XGBoost": 0.499,
+  "CatBoost": 0.379,
+  "LightGBM": 0.124
+ },
+ "stack_intercept": -0.0085,
+ "cv": [
+  {
+   "model": "Market-comparable median",
+   "MAE (lakhs)": 7.604,
+   "MAPE %": 23.266,
+   "MdAPE %": 4.189,
+   "RMSE (lakhs)": 23.969,
+   "R\u00b2 (price)": 0.704,
+   "R\u00b2 (log price)": 0.759,
+   "MAPE % sd": 1.288,
+   "R\u00b2 (price) sd": 0.044
+  },
+  {
+   "model": "Ridge (one-hot)",
+   "MAE (lakhs)": 7.131,
+   "MAPE %": 15.968,
+   "MdAPE %": 8.344,
+   "RMSE (lakhs)": 19.36,
+   "R\u00b2 (price)": 0.804,
+   "R\u00b2 (log price)": 0.887,
+   "MAPE % sd": 0.656,
+   "R\u00b2 (price) sd": 0.063
+  },
+  {
+   "model": "Random Forest",
+   "MAE (lakhs)": 5.695,
+   "MAPE %": 13.347,
+   "MdAPE %": 5.82,
+   "RMSE (lakhs)": 16.998,
+   "R\u00b2 (price)": 0.848,
+   "R\u00b2 (log price)": 0.911,
+   "MAPE % sd": 0.561,
+   "R\u00b2 (price) sd": 0.05
+  },
+  {
+   "model": "XGBoost",
+   "MAE (lakhs)": 5.441,
+   "MAPE %": 12.717,
+   "MdAPE %": 5.965,
+   "RMSE (lakhs)": 14.984,
+   "R\u00b2 (price)": 0.879,
+   "R\u00b2 (log price)": 0.919,
+   "MAPE % sd": 0.554,
+   "R\u00b2 (price) sd": 0.064
+  },
+  {
+   "model": "LightGBM",
+   "MAE (lakhs)": 5.759,
+   "MAPE %": 13.472,
+   "MdAPE %": 6.612,
+   "RMSE (lakhs)": 15.43,
+   "R\u00b2 (price)": 0.872,
+   "R\u00b2 (log price)": 0.914,
+   "MAPE % sd": 0.462,
+   "R\u00b2 (price) sd": 0.065
+  },
+  {
+   "model": "CatBoost",
+   "MAE (lakhs)": 5.846,
+   "MAPE %": 13.424,
+   "MdAPE %": 6.96,
+   "RMSE (lakhs)": 16.508,
+   "R\u00b2 (price)": 0.856,
+   "R\u00b2 (log price)": 0.916,
+   "MAPE % sd": 0.589,
+   "R\u00b2 (price) sd": 0.052
+  },
+  {
+   "model": "Stack (XGB+CatBoost+LGBM)",
+   "MAE (lakhs)": 5.317,
+   "MAPE %": 12.385,
+   "MdAPE %": 6.051,
+   "RMSE (lakhs)": 15.027,
+   "R\u00b2 (price)": 0.879,
+   "R\u00b2 (log price)": 0.924,
+   "MAPE % sd": 0.531,
+   "R\u00b2 (price) sd": 0.06
+  }
+ ],
+ "fold_mape": {
+  "Market-comparable median": [
+   24.178,
+   24.843,
+   22.188,
+   23.321,
+   21.798
+  ],
+  "Ridge (one-hot)": [
+   16.279,
+   16.568,
+   15.013,
+   15.57,
+   16.41
+  ],
+  "Random Forest": [
+   13.555,
+   14.155,
+   12.633,
+   13.139,
+   13.251
+  ],
+  "XGBoost": [
+   12.623,
+   13.621,
+   12.174,
+   12.394,
+   12.773
+  ],
+  "LightGBM": [
+   13.458,
+   14.181,
+   12.885,
+   13.427,
+   13.41
+  ],
+  "CatBoost": [
+   12.868,
+   14.128,
+   12.757,
+   13.72,
+   13.646
+  ],
+  "Stack (XGB+CatBoost+LGBM)": [
+   12.1,
+   13.194,
+   11.777,
+   12.338,
+   12.517
+  ]
+ },
+ "selection": {
+  "lowest_cv_mape": "Stack (XGB+CatBoost+LGBM)",
+  "final_paired_rule": "Stack (XGB+CatBoost+LGBM)",
+  "original_one_sd_rule_pick": "XGBoost",
+  "paired": [
+   {
+    "model": "Market-comparable median",
+    "mean MAPE gap vs best": 10.88,
+    "folds where best wins": 5,
+    "SE of gap": 0.49,
+    "not reliably worse": false
+   },
+   {
+    "model": "Ridge (one-hot)",
+    "mean MAPE gap vs best": 3.583,
+    "folds where best wins": 5,
+    "SE of gap": 0.192,
+    "not reliably worse": false
+   },
+   {
+    "model": "Random Forest",
+    "mean MAPE gap vs best": 0.961,
+    "folds where best wins": 5,
+    "SE of gap": 0.129,
+    "not reliably worse": false
+   },
+   {
+    "model": "XGBoost",
+    "mean MAPE gap vs best": 0.332,
+    "folds where best wins": 5,
+    "SE of gap": 0.081,
+    "not reliably worse": false
+   },
+   {
+    "model": "LightGBM",
+    "mean MAPE gap vs best": 1.087,
+    "folds where best wins": 5,
+    "SE of gap": 0.078,
+    "not reliably worse": false
+   },
+   {
+    "model": "CatBoost",
+    "mean MAPE gap vs best": 1.039,
+    "folds where best wins": 5,
+    "SE of gap": 0.103,
+    "not reliably worse": false
+   },
+   {
+    "model": "Stack (XGB+CatBoost+LGBM)",
+    "mean MAPE gap vs best": 0.0,
+    "folds where best wins": 0,
+    "SE of gap": 0.0,
+    "not reliably worse": true
+   }
+  ]
+ },
+ "test": [
+  {
+   "model": "Market-comparable median",
+   "MAE (lakhs)": 7.629,
+   "MAPE %": 23.601,
+   "MdAPE %": 4.013,
+   "RMSE (lakhs)": 21.046,
+   "R\u00b2 (price)": 0.743,
+   "R\u00b2 (log price)": 0.746,
+   "fit time (s)": 0.003
+  },
+  {
+   "model": "Ridge (one-hot)",
+   "MAE (lakhs)": 7.069,
+   "MAPE %": 16.332,
+   "MdAPE %": 8.024,
+   "RMSE (lakhs)": 16.421,
+   "R\u00b2 (price)": 0.844,
+   "R\u00b2 (log price)": 0.87,
+   "fit time (s)": 0.048
+  },
+  {
+   "model": "Random Forest",
+   "MAE (lakhs)": 5.82,
+   "MAPE %": 13.762,
+   "MdAPE %": 5.794,
+   "RMSE (lakhs)": 14.82,
+   "R\u00b2 (price)": 0.873,
+   "R\u00b2 (log price)": 0.898,
+   "fit time (s)": 1.085
+  },
+  {
+   "model": "XGBoost",
+   "MAE (lakhs)": 5.716,
+   "MAPE %": 13.283,
+   "MdAPE %": 6.289,
+   "RMSE (lakhs)": 13.885,
+   "R\u00b2 (price)": 0.888,
+   "R\u00b2 (log price)": 0.91,
+   "fit time (s)": 1.913
+  },
+  {
+   "model": "LightGBM",
+   "MAE (lakhs)": 6.065,
+   "MAPE %": 14.009,
+   "MdAPE %": 6.411,
+   "RMSE (lakhs)": 14.609,
+   "R\u00b2 (price)": 0.876,
+   "R\u00b2 (log price)": 0.9,
+   "fit time (s)": 5.592
+  },
+  {
+   "model": "CatBoost",
+   "MAE (lakhs)": 6.167,
+   "MAPE %": 14.187,
+   "MdAPE %": 6.928,
+   "RMSE (lakhs)": 14.492,
+   "R\u00b2 (price)": 0.878,
+   "R\u00b2 (log price)": 0.902,
+   "fit time (s)": 4.916
+  },
+  {
+   "model": "Stack (XGB+CatBoost+LGBM)",
+   "MAE (lakhs)": 5.617,
+   "MAPE %": 13.04,
+   "MdAPE %": 6.28,
+   "RMSE (lakhs)": 13.672,
+   "R\u00b2 (price)": 0.892,
+   "R\u00b2 (log price)": 0.912,
+   "fit time (s)": 12.421
+  }
+ ],
+ "ensembles": [
+  {
+   "model": "Market-comparable median",
+   "technique": "baseline: lookup",
+   "CV MAPE %": 23.266,
+   "CV MAPE % sd": 1.288,
+   "test MAPE %": 23.601,
+   "test MdAPE %": 4.013,
+   "test R\u00b2 (price)": 0.743,
+   "fit time (s)": 0.003
+  },
+  {
+   "model": "Ridge (one-hot)",
+   "technique": "baseline: linear",
+   "CV MAPE %": 15.968,
+   "CV MAPE % sd": 0.656,
+   "test MAPE %": 16.332,
+   "test MdAPE %": 8.024,
+   "test R\u00b2 (price)": 0.844,
+   "fit time (s)": 0.048
+  },
+  {
+   "model": "Bagging (decision trees)",
+   "technique": "bagging",
+   "CV MAPE %": 13.322,
+   "CV MAPE % sd": 0.822,
+   "test MAPE %": 13.821,
+   "test MdAPE %": 5.366,
+   "test R\u00b2 (price)": 0.872,
+   "fit time (s)": 0.663
+  },
+  {
+   "model": "Random Forest",
+   "technique": "bagging + feature sampling",
+   "CV MAPE %": 13.347,
+   "CV MAPE % sd": 0.561,
+   "test MAPE %": 13.762,
+   "test MdAPE %": 5.794,
+   "test R\u00b2 (price)": 0.873,
+   "fit time (s)": 1.085
+  },
+  {
+   "model": "XGBoost",
+   "technique": "boosting",
+   "CV MAPE %": 12.717,
+   "CV MAPE % sd": 0.554,
+   "test MAPE %": 13.283,
+   "test MdAPE %": 6.289,
+   "test R\u00b2 (price)": 0.888,
+   "fit time (s)": 1.913
+  },
+  {
+   "model": "LightGBM",
+   "technique": "boosting",
+   "CV MAPE %": 13.472,
+   "CV MAPE % sd": 0.462,
+   "test MAPE %": 14.009,
+   "test MdAPE %": 6.411,
+   "test R\u00b2 (price)": 0.876,
+   "fit time (s)": 5.592
+  },
+  {
+   "model": "CatBoost",
+   "technique": "boosting",
+   "CV MAPE %": 13.424,
+   "CV MAPE % sd": 0.589,
+   "test MAPE %": 14.187,
+   "test MdAPE %": 6.928,
+   "test R\u00b2 (price)": 0.878,
+   "fit time (s)": 4.916
+  },
+  {
+   "model": "Voting (XGB+CatBoost+LGBM)",
+   "technique": "voting (equal weights)",
+   "CV MAPE %": 12.48,
+   "CV MAPE % sd": 0.521,
+   "test MAPE %": 13.13,
+   "test MdAPE %": 6.356,
+   "test R\u00b2 (price)": 0.891,
+   "fit time (s)": 12.421
+  },
+  {
+   "model": "Stack (XGB+CatBoost+LGBM)",
+   "technique": "stacking (learned weights)",
+   "CV MAPE %": 12.385,
+   "CV MAPE % sd": 0.531,
+   "test MAPE %": 13.04,
+   "test MdAPE %": 6.28,
+   "test R\u00b2 (price)": 0.892,
+   "fit time (s)": 12.421
+  }
+ ],
+ "permutation_importance_mape_increase": {
+  "age": 47.26,
+  "brand": 18.31,
+  "gear": 7.68,
+  "engine_cc": 6.97,
+  "model": 6.83,
+  "power_mirror": 0.96,
+  "fuel": 0.85,
+  "town": 0.45,
+  "power_window": 0.34,
+  "power_steering": 0.3,
+  "leasing": 0.2,
+  "air_condition": 0.09,
+  "condition": 0.02
+ },
+ "shap_effects_pct": {
+  "age 0-5": 76.0,
+  "age 6-10": 54.5,
+  "age 11-15": 26.4,
+  "age 16-20": 2.6,
+  "age 21-30": -23.0,
+  "age 31-60": -57.7,
+  "fuel HYBRID": 0.3,
+  "fuel PETROL": 0.3,
+  "fuel DIESEL": -4.2,
+  "fuel ELECTRIC": -7.0,
+  "gear AUTOMATIC": 9.0,
+  "gear MANUAL": -11.9,
+  "leasing ONGOING LEASE": -9.1,
+  "leasing NO LEASING": 0.4
+ },
+ "shap_mean_abs": {
+  "age": 0.3407,
+  "brand": 0.1963,
+  "gear": 0.1003,
+  "engine_cc": 0.0826,
+  "model": 0.0765,
+  "power_mirror": 0.0563,
+  "town": 0.0195,
+  "power_steering": 0.0176,
+  "fuel": 0.0109,
+  "leasing": 0.0084,
+  "power_window": 0.0079,
+  "air_condition": 0.0022,
+  "condition": 0.0003
+ },
+ "shap_stack_mean_abs": {
+  "age": 0.3263,
+  "gear": 0.1924,
+  "brand": 0.1673,
+  "engine_cc": 0.0835,
+  "model": 0.0561,
+  "power_mirror": 0.0398,
+  "town": 0.0168,
+  "power_window": 0.015,
+  "power_steering": 0.012,
+  "fuel": 0.0109,
+  "leasing": 0.0075,
+  "air_condition": 0.0023,
+  "condition": 0.0003
+ },
+ "segments_mdape": {
+  "model seen in train": [
+   {
+    "model seen in train": "never",
+    "n": 217,
+    "Stack (XGB+CatBoost+LGBM)": 14.3,
+    "CatBoost": 15.1,
+    "XGBoost": 14.2,
+    "Market-comparable median": 46.3
+   },
+   {
+    "model seen in train": "1\u20134 times",
+    "n": 235,
+    "Stack (XGB+CatBoost+LGBM)": 12.9,
+    "CatBoost": 13.2,
+    "XGBoost": 14.4,
+    "Market-comparable median": 9.4
+   },
+   {
+    "model seen in train": "5\u201319 times",
+    "n": 387,
+    "Stack (XGB+CatBoost+LGBM)": 8.0,
+    "CatBoost": 8.9,
+    "XGBoost": 7.5,
+    "Market-comparable median": 4.2
+   },
+   {
+    "model seen in train": "20+ times",
+    "n": 1113,
+    "Stack (XGB+CatBoost+LGBM)": 4.3,
+    "CatBoost": 4.8,
+    "XGBoost": 4.4,
+    "Market-comparable median": 2.5
+   }
+  ],
+  "price band": [
+   {
+    "price band": "Q1 cheapest",
+    "n": 489,
+    "Stack (XGB+CatBoost+LGBM)": 11.6,
+    "CatBoost": 12.5,
+    "XGBoost": 11.8,
+    "Market-comparable median": 11.0
+   },
+   {
+    "price band": "Q2",
+    "n": 489,
+    "Stack (XGB+CatBoost+LGBM)": 6.0,
+    "CatBoost": 6.6,
+    "XGBoost": 6.1,
+    "Market-comparable median": 3.7
+   },
+   {
+    "price band": "Q3",
+    "n": 486,
+    "Stack (XGB+CatBoost+LGBM)": 4.7,
+    "CatBoost": 5.3,
+    "XGBoost": 4.9,
+    "Market-comparable median": 3.5
+   },
+   {
+    "price band": "Q4 dearest",
+    "n": 488,
+    "Stack (XGB+CatBoost+LGBM)": 5.3,
+    "CatBoost": 6.3,
+    "XGBoost": 4.8,
+    "Market-comparable median": 2.7
+   }
+  ],
+  "age band": [
+   {
+    "age band": "0\u20135 y",
+    "n": 14,
+    "Stack (XGB+CatBoost+LGBM)": 12.3,
+    "CatBoost": 12.2,
+    "XGBoost": 11.3,
+    "Market-comparable median": 8.4
+   },
+   {
+    "age band": "6\u201310 y",
+    "n": 524,
+    "Stack (XGB+CatBoost+LGBM)": 4.4,
+    "CatBoost": 4.9,
+    "XGBoost": 4.1,
+    "Market-comparable median": 2.3
+   },
+   {
+    "age band": "11\u201320 y",
+    "n": 743,
+    "Stack (XGB+CatBoost+LGBM)": 5.1,
+    "CatBoost": 5.8,
+    "XGBoost": 5.0,
+    "Market-comparable median": 3.1
+   },
+   {
+    "age band": "20+ y",
+    "n": 671,
+    "Stack (XGB+CatBoost+LGBM)": 10.8,
+    "CatBoost": 12.5,
+    "XGBoost": 10.6,
+    "Market-comparable median": 10.3
+   }
+  ],
+  "fuel": [
+   {
+    "fuel": "DIESEL",
+    "n": 117,
+    "Stack (XGB+CatBoost+LGBM)": 13.2,
+    "CatBoost": 14.8,
+    "XGBoost": 13.6,
+    "Market-comparable median": 19.9
+   },
+   {
+    "fuel": "ELECTRIC",
+    "n": 18,
+    "Stack (XGB+CatBoost+LGBM)": 13.6,
+    "CatBoost": 14.1,
+    "XGBoost": 9.6,
+    "Market-comparable median": 37.8
+   },
+   {
+    "fuel": "HYBRID",
+    "n": 240,
+    "Stack (XGB+CatBoost+LGBM)": 3.8,
+    "CatBoost": 4.4,
+    "XGBoost": 3.3,
+    "Market-comparable median": 2.3
+   },
+   {
+    "fuel": "PETROL",
+    "n": 1577,
+    "Stack (XGB+CatBoost+LGBM)": 6.5,
+    "CatBoost": 6.9,
+    "XGBoost": 6.6,
+    "Market-comparable median": 4.2
+   }
+  ],
+  "brand": [
+   {
+    "brand": "SUZUKI",
+    "n": 505,
+    "MdAPE": 3.8
+   },
+   {
+    "brand": "PERODUA",
+    "n": 46,
+    "MdAPE": 4.4
+   },
+   {
+    "brand": "MICRO",
+    "n": 47,
+    "MdAPE": 4.8
+   },
+   {
+    "brand": "HONDA",
+    "n": 131,
+    "MdAPE": 5.0
+   },
+   {
+    "brand": "TOYOTA",
+    "n": 603,
+    "MdAPE": 5.9
+   },
+   {
+    "brand": "NISSAN",
+    "n": 239,
+    "MdAPE": 8.1
+   },
+   {
+    "brand": "MITSUBISHI",
+    "n": 59,
+    "MdAPE": 15.8
+   },
+   {
+    "brand": "MAZDA",
+    "n": 44,
+    "MdAPE": 18.5
+   }
+  ]
+ },
+ "interval": {
+  "q10_log": -0.1555,
+  "q90_log": 0.1685,
+  "lower_pct": -14.4,
+  "upper_pct": 18.3,
+  "test_coverage": 0.794
+ },
+ "inference": {
+  "car": {
+   "brand": "TOYOTA",
+   "model": "AQUA",
+   "yom": "2012",
+   "engine_cc": "1460.0",
+   "gear": "Automatic",
+   "fuel": "Hybrid",
+   "town": "Boralesgamuwa",
+   "leasing": "No Leasing",
+   "condition": "USED",
+   "air_condition": "Available",
+   "power_steering": "Available",
+   "power_mirror": "Available",
+   "power_window": "Available"
+  },
+  "date": "2025-02-05",
+  "actual_lakhs": 70.95,
+  "predicted_lakhs": 65.68,
+  "range80": [
+   56.22,
+   77.73
+  ],
+  "error_pct": -7.4,
+  "catboost_top_contributions_pct": {
+   "age": 23.6,
+   "brand": 21.0,
+   "gear": 5.8,
+   "power_mirror": 4.0,
+   "engine_cc": -2.7,
+   "model": -1.7
+  },
+  "stack_top_contributions_pct": {
+   "age": 20.4,
+   "brand": 16.9,
+   "gear": 13.8,
+   "model": -5.6,
+   "power_mirror": 2.3,
+   "fuel": 2.2
+  }
+ }
+}
