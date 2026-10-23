@@ -57,10 +57,13 @@ APP_ID=$(az ad app list --display-name "$GH_APP" --query "[0].appId" -o tsv)
 if [ -z "$APP_ID" ]; then
   APP_ID=$(az ad app create --display-name "$GH_APP" --query appId -o tsv)
   az ad sp create --id "$APP_ID" -o none
-  az ad app federated-credential create --id "$APP_ID" --parameters "{
-    \"name\": \"main\", \"issuer\": \"https://token.actions.githubusercontent.com\",
-    \"subject\": \"repo:$REPO:ref:refs/heads/main\", \"audiences\": [\"api://AzureADTokenExchange\"]}" -o none
 fi
+# GitHub's OIDC subject carries immutable owner/repo IDs: repo:owner@123/name@456:ref:refs/heads/main
+SUBJECT=$(gh api "repos/$REPO" --jq '"repo:\(.owner.login)@\(.owner.id)/\(.name)@\(.id):ref:refs/heads/main"')
+az ad app federated-credential delete --id "$APP_ID" --federated-credential-id main -o none 2>/dev/null || true
+az ad app federated-credential create --id "$APP_ID" --parameters "{
+  \"name\": \"main\", \"issuer\": \"https://token.actions.githubusercontent.com\",
+  \"subject\": \"$SUBJECT\", \"audiences\": [\"api://AzureADTokenExchange\"]}" -o none
 # Scoped to this resource group only. Contributor does not include pushing images, hence AcrPush.
 az role assignment create --assignee "$APP_ID" --role Contributor --scope "$(az group show -n "$RG" --query id -o tsv)" -o none
 az role assignment create --assignee "$APP_ID" --role AcrPush --scope "$ACR_ID" -o none
